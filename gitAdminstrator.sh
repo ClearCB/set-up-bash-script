@@ -55,12 +55,7 @@ else
 	mkdir $1
 	cd $1
 	echo "Directory created. Moving to it."
-	# TOREMOVE
-	sleep 2
-	echo "Removing the directory to keep working."
-	cd ..
-	rmdir ./$1
-	# ENDTOREMOVE
+ 
 fi
 
 # INSTALL GIT, JAVA AND MAVEN
@@ -102,10 +97,30 @@ fi
 echo "Updating package list!"
 sudo apt-get update
 
+# Install vscode
 
-# Configure Enviromentals variables
+if has code 2>/dev/null;
+then
+	echo "Code already installed"
+else
+	echo "Code is not installed. Installing..."
+	sleep 2
+	sudo snap install --classic code
+fi
 
-echo "Adding the path of the jdk to the Venv"
-sleep 1
+# Configuration for maven project
 
+echo "Preparing maven project"
+sleep 2
+mvn archetype:generate
 
+# Configuration for git"
+
+echo "Configuration for git..."
+
+sleep 2
+git config --global user.name "ClearCB"
+git config --global user.email "acasasgarcia1@cifpfbmoll.eu"
+
+# git push and first commit 
+# must be set manualy, after creating a repository on github.
