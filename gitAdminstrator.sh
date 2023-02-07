@@ -43,18 +43,18 @@ fi
 
 clear
 
-# INSTALL GIT, JAVA AND MAVEN
+# INSTALL GIT, JAVA, MAVEN AND VSCODE
 
+echo "Getting ready Java, Git, Maven and Vscode"
+sleep 2
 # First check if it is in the system. Installing it if it is not already.
-
-# hash is finding if the command is working, so we can install or not the program.
 if  hash java 2>/dev/null ;
 then
 	echo "Java already installed"
 	sleep 2
 else
 	echo "Java is not installed. Installing..."
-	sleep 2
+	sleep 4
 	sudo apt install default-jdk
 
 fi
@@ -62,34 +62,48 @@ fi
 if hash git 2>/dev/null ;
 then
         echo "Git already installed"
+	sleep 2
 else
         echo "Git is not installed. Preparing to install it..."
-	sleep 2
+	sleep 4
 	sudo apt install git
 fi
 
 if  hash mvn 2>/dev/null ;
 then
         echo "Maven already installed"
+	sleep 2
 else
         echo "Maven is not installed. Installing..."
-	sleep 2
+	sleep 4
 	sudo apt install maven
 fi
 
 if hash code 2>/dev/null;
 then
 	echo "Code already installed"
+	sleep 2
 else
 	echo "Code is not installed. Installing..."
-	sleep 2
+	sleep 4
 	sudo snap install --classic code
 fi
+
+clear
 
 echo "Updating package list!"
 sudo apt-get update
 
 clear
+
+# Configuriation for git
+
+echo "Setting the email and username"
+
+git config --global user.name "Abel Casas"
+git config --global user.email acasasgarcia1@cifpfbmoll.eu
+
+
 # Configuration for maven project
 
 echo "Preparing maven project"
@@ -98,14 +112,99 @@ sleep 2
 # To someone that is not at our class, it should change the groupid.
 mvn archetype:generate -DgroupId=edu.carptocraft.$directoryName -DartifactId=$directoryName -DarchetypeArtifactId=maven-archetype-quickstart -DarchetypeVersion=1.4 -DinteractiveMode=false
 
+sleep 2
+
+clear
 # Configuration for git"
 
-# Change this configuration before the maven project
-echo "Configuration for git..."
+while true;
+do
+	sleep 2
+        read -p "Do you want to start a git repository now? " election
 
-sleep 2
-git config --global user.name "ClearCB"
-git config --global user.email "acasasgarcia1@cifpfbmoll.eu"
+        if  [[ $election == "y" || $election == "Y" ]]; then
+		echo "Starting a git repository in the actual directory"
+		echo $directoryNAme >> README.md
+		git init;
+		git add .
+		git commit -m "first commit"
+		echo "Made the first commit"
+		sleep 2
+		git branch -M main
+
+		while true;
+		do
+
+			read -p "Please, copy the URL of the repository that will be link with this local repository: " urlGitRepository
+
+			echo "You are going to push the actual git repository to the following link: " $urlGitRepository
+
+			read -p "Are you agree? Y/N  " electionGit
+
+			if  [[ $electionGit == "y" || $electionGit == "Y" ]];then
+
+				git remote add origin $urlGitRepository
+				git push -u origin main
+				echo "Git linked correctly."
+				sleep 2
+				break;
+
+        		elif [[ $electionGit == "n" || $electionGit == "N" ]]; then
+
+
+				echo "Ok, get the url and try again."
+				sleep 2
+        		else
+                		echo "Please, write N or Y."
+        		fi
+
+		done
+		echo "Repository created"
+
+
+		sleep 2
+		break;
+
+        elif [[ $election == "n" || $election == "N" ]]; then
+                echo "Okay, remember that your proyect is not connected to git yet."
+		break;
+else
+		echo "Please, write Y/N"
+        fi
+done
 
 # add new dependecies? yes or no, then finall execution.
 
+while true;
+do
+
+        read -p "Do you want to install more dependencies?: Y/N  " election
+
+        if  [[ $election == "n" || $election == "N" ]]; then
+
+		sleep 1
+		echo "Ok, it was a pleasure to serve you. See you!"
+		sleep 1
+		break;
+
+        elif [[ $election == "y" || $election == "Y" ]]; then
+                read -p "Write the following the dependencie you want to install: " dependency
+
+                echo "Trying to install with apt-get: " $dependency
+		sudo apt-get $dependency 2>/dev/null
+		sleep 2
+
+		if  hash $dependency 2>/dev/null ;then
+
+	        	echo $dependency" already installed"
+        		sleep 2
+		else
+        		echo $dependency" is not installed. Something went wrong...try to install it manually later."
+        		sleep 2
+
+		fi
+
+        else
+                echo "Please, write N or Y."
+        fi
+done
