@@ -56,6 +56,9 @@ else
 	echo "Java is not installed. Installing..."
 	sleep 4
 	sudo apt install default-jdk
+	echo "Java installed"
+	sleep 2
+	clear
 
 fi
 
@@ -67,6 +70,9 @@ else
         echo "Git is not installed. Preparing to install it..."
 	sleep 4
 	sudo apt install git
+	echo "Git installed"
+	sleep 2
+	clear
 fi
 
 if  hash mvn 2>/dev/null ;
@@ -77,6 +83,9 @@ else
         echo "Maven is not installed. Installing..."
 	sleep 4
 	sudo apt install maven
+	echo "Maven installed"
+	sleep 2
+	clear
 fi
 
 if hash code 2>/dev/null;
@@ -87,6 +96,9 @@ else
 	echo "Code is not installed. Installing..."
 	sleep 4
 	sudo snap install --classic code
+	echo "Vscode installed"
+	sleep 2
+	clear
 fi
 
 clear
