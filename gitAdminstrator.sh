@@ -110,14 +110,17 @@ clear
 
 # Configuriation for git
 
+echo "Configuration to git..."
+sleep 1
 echo "Setting the email and username"
+sleep 1
 
+# This should be change to your own information
 git config --global user.name "Abel Casas"
 git config --global user.email acasasgarcia1@cifpfbmoll.eu
 
-
+clear
 # Configuration for maven project
-
 echo "Preparing maven project"
 sleep 2
 
@@ -193,10 +196,10 @@ do
         read -p "Do you want to install more dependencies?: Y/N  " election
 
         if  [[ $election == "n" || $election == "N" ]]; then
-
+		clear
 		sleep 1
 		echo "Ok, it was a pleasure to serve you. See you!"
-		sleep 1
+		sleep 2
 		break;
 
         elif [[ $election == "y" || $election == "Y" ]]; then
