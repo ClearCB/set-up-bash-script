@@ -1,62 +1,47 @@
 #!/bin/bash
 
-# At this script, we will interact with the application git
-# so it will be posible to clone, create, update...remotes or local
-# repositories.
-
-# asking if you want to create a new directory / path of work.
-# selecting a directory.
-
-
-# git init
-
-# git config
-# git config --list
-# git config --global user.name "Your name'
-# git config --global user.email "your email'
-
-
-# git clone
-# you need a user from git and the repository. It has to be valid.
-
-# git add
-
-# git commit
-# git commit -m "message'
-
-
-# git push
-# git push -u
-
-# git status
-
-
-# git pull
-
-# git branch
-
-# git checkout
-
-# git restore
-
-# git diff
-
-# rm ? 
-
-# git cache (git ignore)
-
 
 # CREATE AND MOVE TO DIRECTORY
-if [ -d $1 ];
+
+read -p "Now write the path in which you want to create the project: " pathDirectory
+read -p "Please, write the name of the folder in which you want to start working: " directoryName
+
+echo "You are going to create a directory in " $pathDirectory
+echo "And the name of it is " $directoryName
+
+while true;
+do
+
+	read -p "Are you agree? Y/N " election
+
+	if  [[ $election == "y" || $election == "Y" ]];	then
+		break;
+
+	elif [[ $election == "n" || $election == "N" ]]; then
+		read -p "Now write the path in which you want to create the project: " pathDirectory
+		read -p "Please, write the name of the folder in which you want to start working: " directoryName
+
+
+		echo "You are going to create a directory in " $pathDirectory
+		echo "And the name of it is " $directoryName
+	else
+		echo "Please, write N or Y."
+	fi
+done
+
+
+if [ -d $pathDirectory/$directoryName ];
 then
 	echo "The directory is already created. Moving to it."
-	cd $1
+	cd $pathDirectory/$directoryName
 else
-	mkdir $1
-	cd $1
+	mkdir $pathDirectory/$directoryName
+	cd $pathDirectory/$directoryName
 	echo "Directory created. Moving to it."
  
 fi
+
+clear
 
 # INSTALL GIT, JAVA AND MAVEN
 
@@ -92,14 +77,7 @@ else
 	sudo apt install maven
 fi
 
-# Update all the dependecies.
-
-echo "Updating package list!"
-sudo apt-get update
-
-# Install vscode
-
-if has code 2>/dev/null;
+if hash code 2>/dev/null;
 then
 	echo "Code already installed"
 else
@@ -108,11 +86,17 @@ else
 	sudo snap install --classic code
 fi
 
+echo "Updating package list!"
+sudo apt-get update
+
+clear
 # Configuration for maven project
 
 echo "Preparing maven project"
 sleep 2
-mvn archetype:generate
+
+# To someone that is not at our class, it should change the groupid.
+mvn archetype:generate -DgroupId=edu.carptocraft.$directoryName -DartifactId=$directoryName -DarchetypeArtifactId=maven-archetype-quickstart -DarchetypeVersion=1.4 -DinteractiveMode=false
 
 # Configuration for git"
 
