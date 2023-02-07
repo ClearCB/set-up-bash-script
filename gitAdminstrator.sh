@@ -100,11 +100,12 @@ mvn archetype:generate -DgroupId=edu.carptocraft.$directoryName -DartifactId=$di
 
 # Configuration for git"
 
+# Change this configuration before the maven project
 echo "Configuration for git..."
 
 sleep 2
 git config --global user.name "ClearCB"
 git config --global user.email "acasasgarcia1@cifpfbmoll.eu"
 
-# git push and first commit 
-# must be set manualy, after creating a repository on github.
+# add new dependecies? yes or no, then finall execution.
+
