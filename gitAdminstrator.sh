@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/bash -x
 
 # CREATE AND MOVE TO DIRECTORY 
 read -p "Now write the path in which you want to create the project: " pathDirectory
@@ -152,7 +152,9 @@ do
 
 			read -p "Are you agree? Y/N  " electionGit
 
+
 			if  [[ $electionGit == "y" || $electionGit == "Y" ]];then
+
 
 				git remote add origin $urlGitRepository
 				git push -u origin main
