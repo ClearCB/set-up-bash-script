@@ -100,23 +100,6 @@ else
 	clear
 fi
 
-# Install curl to check if urls are correct.
-if hash curl 2>/dev/null;
-then
-        echo "Curl already installed"
-        sleep 2
-else
-        echo "Curl is not installed. Installing..."
-        sleep 4
-        sudo apt install curl
-        echo "Curl installed and ready to check URLs."
-        sleep 2
-        clear
-fi
-
-
-
-
 clear
 echo "Updating package list!"
 sudo apt-get update
