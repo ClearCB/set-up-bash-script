@@ -228,6 +228,9 @@ do
 
                 echo "Trying to install with apt-get: " $dependency
 		sudo apt-get $dependency 2>/dev/null
+		sudo apt $dependency 2>/dev/null
+		sudo snap $dependency 2>/dev/null
+		clear
 		sleep 2
 
 		if  hash $dependency 2>/dev/null ;then
