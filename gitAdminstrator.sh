@@ -1,26 +1,21 @@
 #!/bin/bash
 
-
-# CREATE AND MOVE TO DIRECTORY
-
+# CREATE AND MOVE TO DIRECTORY 
 read -p "Now write the path in which you want to create the project: " pathDirectory
 read -p "Please, write the name of the folder in which you want to start working: " directoryName
-
 echo "You are going to create a directory in " $pathDirectory
 echo "And the name of it is " $directoryName
 
 while true;
 do
-
 	read -p "Are you agree? Y/N " election
-
+	
 	if  [[ $election == "y" || $election == "Y" ]];	then
 		break;
 
 	elif [[ $election == "n" || $election == "N" ]]; then
 		read -p "Now write the path in which you want to create the project: " pathDirectory
 		read -p "Please, write the name of the folder in which you want to start working: " directoryName
-
 
 		echo "You are going to create a directory in " $pathDirectory
 		echo "And the name of it is " $directoryName
@@ -29,7 +24,7 @@ do
 	fi
 done
 
-
+# This allows us to check if a directory exist or not. (True/False)
 if [ -d $pathDirectory/$directoryName ];
 then
 	echo "The directory is already created. Moving to it."
@@ -37,17 +32,18 @@ then
 else
 	mkdir $pathDirectory/$directoryName
 	cd $pathDirectory/$directoryName
-	echo "Directory created. Moving to it."
- 
+	echo "Directory created. Moving to it." 
 fi
 
 clear
 
-# INSTALL GIT, JAVA, MAVEN AND VSCODE
 
+# INSTALL GIT, JAVA, MAVEN AND VSCODE
 echo "Getting ready Java, Git, Maven and Vscode"
 sleep 2
-# First check if it is in the system. Installing it if it is not already.
+
+# First check if it is in the system. Installing it if it is not already. Hash allows us to store (shows with -t argument) the directory and error if not.
+# Java
 if  hash java 2>/dev/null ;
 then
 	echo "Java already installed"
@@ -62,6 +58,7 @@ else
 
 fi
 
+# Git
 if hash git 2>/dev/null ;
 then
         echo "Git already installed"
@@ -75,6 +72,7 @@ else
 	clear
 fi
 
+# Maven
 if  hash mvn 2>/dev/null ;
 then
         echo "Maven already installed"
@@ -88,6 +86,7 @@ else
 	clear
 fi
 
+# VS-Code
 if hash code 2>/dev/null;
 then
 	echo "Code already installed"
@@ -102,14 +101,11 @@ else
 fi
 
 clear
-
 echo "Updating package list!"
 sudo apt-get update
-
 clear
 
 # Configuriation for git
-
 echo "Configuration to git..."
 sleep 1
 echo "Setting the email and username"
@@ -120,23 +116,23 @@ git config --global user.name "Abel Casas"
 git config --global user.email acasasgarcia1@cifpfbmoll.eu
 
 clear
+
 # Configuration for maven project
 echo "Preparing maven project"
 sleep 2
 
-# To someone that is not at our class, it should change the groupid.
+# Since this script is created for me, someone just should change the information is stored here.
 mvn archetype:generate -DgroupId=edu.carptocraft.$directoryName -DartifactId=$directoryName -DarchetypeArtifactId=maven-archetype-quickstart -DarchetypeVersion=1.4 -DinteractiveMode=false
 
 sleep 2
-
 clear
-# Configuration for git"
 
+# Creating git repository
 while true;
 do
 	sleep 2
         read -p "Do you want to start a git repository now? " election
-
+	
         if  [[ $election == "y" || $election == "Y" ]]; then
 		echo "Starting a git repository in the actual directory"
 		echo $directoryNAme >> README.md
@@ -188,8 +184,7 @@ else
         fi
 done
 
-# add new dependecies? yes or no, then finall execution.
-
+# Add new dependecies? yes or no, then finall execution.
 while true;
 do
 
