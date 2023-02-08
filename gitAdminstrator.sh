@@ -100,6 +100,23 @@ else
 	clear
 fi
 
+# Install curl to check if urls are correct.
+if hash curl 2>/dev/null;
+then
+        echo "Curl already installed"
+        sleep 2
+else
+        echo "Curl is not installed. Installing..."
+        sleep 4
+        sudo apt install curl
+        echo "Curl installed and ready to check URLs."
+        sleep 2
+        clear
+fi
+
+
+
+
 clear
 echo "Updating package list!"
 sudo apt-get update
@@ -132,10 +149,12 @@ while true;
 do
 	sleep 2
         read -p "Do you want to start a git repository now? " election
-	
+
         if  [[ $election == "y" || $election == "Y" ]]; then
 		echo "Starting a git repository in the actual directory"
-		echo $directoryNAme >> README.md
+		echo $directoryName >> README.md
+		echo "#Gitignore config" >> .gitignore
+		mkdir ./doc
 		git init;
 		git add .
 		git commit -m "first commit"
@@ -148,10 +167,15 @@ do
 
 			read -p "Please, copy the URL of the repository that will be link with this local repository: " urlGitRepository
 
-			echo "You are going to push the actual git repository to the following link: " $urlGitRepository
+			# Check if the remote repository exist and is correct.
+			if git ls-remote $urlGitRepository 2>/dev/null ;then
 
-			read -p "Are you agree? Y/N  " electionGit
+				echo "You are going to push the actual git repository to the following link: " $urlGitRepository
 
+				read -p "Are you agree? Y/N  " electionGit
+			else
+				continue;
+			fi
 
 			if  [[ $electionGit == "y" || $electionGit == "Y" ]];then
 
