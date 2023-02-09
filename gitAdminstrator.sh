@@ -100,6 +100,23 @@ else
 	clear
 fi
 
+# Install curl to check if urls are correct.
+if hash curl 2>/dev/null;
+then
+        echo "Curl already installed"
+        sleep 2
+else
+        echo "Curl is not installed. Installing..."
+        sleep 4
+        sudo apt install curl
+        echo "Curl installed and ready to check URLs."
+        sleep 2
+        clear
+fi
+
+
+
+
 clear
 echo "Updating package list!"
 sudo apt-get update
@@ -112,9 +129,9 @@ echo "Setting the email and username"
 sleep 1
 
 # This should be change to your own information
-git config --global user.name "Abel Casas"
+git config --global user.name ClearCB
 git config --global user.email acasasgarcia1@cifpfbmoll.eu
-
+git config --global credential.helper store
 clear
 
 # Configuration for maven project
@@ -209,12 +226,11 @@ do
         elif [[ $election == "y" || $election == "Y" ]]; then
                 read -p "Write the following the dependencie you want to install: " dependency
 
-                echo "Trying to install with apt-get: " $dependency
-		sudo apt-get $dependency 2>/dev/null
-		sudo apt $dependency 2>/dev/null
-		sudo snap $dependency 2>/dev/null
-		clear
+                echo "Trying to install " $dependency
+
+		sudo apt install $dependency 2>/dev/null
 		sleep 2
+		clear
 
 		if  hash $dependency 2>/dev/null ;then
 
